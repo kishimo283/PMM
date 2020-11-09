@@ -7,6 +7,8 @@
 @section('content')
     @if(Auth::check())
     <p>ユーザー名：　{{ $user->name }}</p>
+    <p><a href="/home">ログアウト</a></p>
+    <p><a href="/main">メインページへ</a></p>
     @else
     <p>※ログインしていません（<a href="/login">ログイン</a>|<a href="/register">登録</a>）</p>
     @endif

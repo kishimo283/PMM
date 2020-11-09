@@ -15,14 +15,15 @@ class CreateProjectsTable extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
             $table->foreignId('user_id')->constrained();
             $table->text('overview');
             $table->string('skill');
             $table->date('start_date');
             $table->date('end_date');
             $table->unsignedInteger('recruitment');
-            $table->string('status');
-            $table->text('specification')->nullable();
+            $table->string('status')->default('未着手');
+            $table->string('specification')->nullable();
             $table->string('link')->nullable();
             $table->unsignedInteger('price')->nullable();
             $table->timestamps();
