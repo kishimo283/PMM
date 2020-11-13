@@ -5,6 +5,15 @@
 @section('menutitle', '新規プロジェクト投稿')
 
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <form action="/post" method="POST" enctype="multipart/form-data">
         @csrf
         <input id="user_id" name="user_id" type="hidden" value="{{ $id }}">

@@ -6,7 +6,7 @@
 
 @section('content')
     <p><a href="/newproject">新規プロジェクトを立ち上げる</a></p>
-    <p><a href="/mypage">マイページへ</a></p>
+    <p><a href="/mypage/{{ $user->id }}">マイページへ</a></p>
     @foreach($projects as $project)
         <div class="container">
             <div class="row">

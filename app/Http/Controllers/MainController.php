@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Project;
+use App\Models\Comment;
 
 class MainController extends Controller
 {
@@ -23,8 +24,9 @@ class MainController extends Controller
      *@param
      */
     public function main() {
+        $user = Auth::user();
         $projects = Project::all();
-        return view('main', ['projects' => $projects]);
+        return view('main', ['projects' => $projects, 'user' => $user]);
     }
 
     /**
@@ -41,6 +43,30 @@ class MainController extends Controller
      *@param
      */
     public function storeNewproject(Request $request) {
+
+        $this->validate(
+            $request, [
+                'title' => 'required|string|max:30',
+                'overview' => 'required|string|max:1000',
+                'skill' => 'required|string|max:100',
+                'start_date' => 'required',
+                'end_date' => 'required',
+                'recruitment' => 'required',
+            ],[
+                'title.required' => 'タイトルは必須です',
+                'title.string' => 'タイトルは文字列を入力してください',
+                'title.max:30' => 'タイトルは30文字以下です',
+                'overview.required' => '概要は必須です',
+                'overview.string' => '概要は文字列を入力してください',
+                'overview.max:1000' => '概要は1000文字以下です',
+                'skill.required' => 'スキルは必須です',
+                'skill.string' => 'スキルは文字列を入力してください',
+                'skill.max:100' => 'スキルは100文字以下です',
+                'start_date.required' => '開始日を入力してください',
+                'end_date.required' => '終了日を入力してください',
+                'recruitment.required' => '人数を入力してください',
+            ]
+        );
 
         $file_name = $request->file('specification')->getClientOriginalName();
         $request->file('specification')->storeAs('public', $file_name);
@@ -72,7 +98,9 @@ class MainController extends Controller
      *@param
      */
     public function showMypage() {
-        return view('mypage');
+        $user = Auth::user();
+        $param = ['user' => $user];
+        return view('mypage', $param);
     }
 
     /**
@@ -80,7 +108,80 @@ class MainController extends Controller
      *@param
      */
     public function project($id) {
+        $user = Auth::user();
         $project = Project::find($id);
-        return view('project', ['project' => $project]);
+        $comments = $project->comments()->orderBy('created_at','desc')->get();
+        return view('project', ['project' => $project, 'comments' => $comments, 'user' => $user]);
+    }
+
+    /**
+     *コメント投稿機能
+     *
+     */
+    public function comment(Request $request) {
+        $comment = new Comment;
+        $comment->user_id = $request->user_id;
+        $comment->project_id = $request->project_id;
+        $comment->body = $request->body;
+        \DB::beginTransaction();
+        try {
+            $comment->save();
+            \DB::commit();
+        }catch(\Throwable $e) {
+            \DB::rollback();
+            abort(500);
+        }
+        return redirect()->back();
+    }
+
+    /**
+     *コメント削除機能
+     *
+     */
+    public function CommentDestroy($id) {
+        $comment = Comment::find($id);
+        $comment->delete();
+        return redirect()->back();
+    }
+
+    /**
+     *マイページ編集画面表示
+     *@param
+     */
+    public function showEditMypage() {
+        $user = Auth::user();
+        $param = ['user' => $user];
+        return view('editmypage', $param);
+    }
+
+    /**
+     *マイページ更新機能
+     *
+     */
+    public function updateMypage(Request $request) {
+        if(is_null($request->photo)) {
+            $file_name = null;
+        }else {
+            $file_name = $request->file('photo')->getClientOriginalName();
+            $request->file('photo')->storeAs('public/photos', $file_name);
+        }
+
+        \DB::beginTransaction();
+        try {
+            $user = Auth::user();
+            $user->fill([
+                'name' => $request['name'],
+                'email' => $request['email'],
+                'photo' => $file_name,
+                'introduction' => $request['introduction'],
+            ]);
+            $user->save();
+            \DB::commit();
+        }catch(\Throwable $e) {
+            \DB::rollback();
+            abort(500);
+        }
+
+        return redirect(route('main'));
     }
 }

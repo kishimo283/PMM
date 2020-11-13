@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="header">
-        <h1>@yield('title')</h1>
+        <h1><a href="/">@yield('title')</a></h1>
     </div>
     <h2 class="menutitle">@yield('menutitle')</h2>
     <div class="content">
