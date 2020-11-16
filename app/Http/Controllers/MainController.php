@@ -97,10 +97,11 @@ class MainController extends Controller
      *マイページ表示
      *@param
      */
-    public function showMypage() {
+    public function showMypage($id) {
         $user = Auth::user();
         $param = ['user' => $user];
-        return view('mypage', $param);
+        $projects = $user->projects()->orderBy('created_at','desc')->get();
+        return view('mypage', $param, ['projects' => $projects]);
     }
 
     /**
@@ -112,6 +113,47 @@ class MainController extends Controller
         $project = Project::find($id);
         $comments = $project->comments()->orderBy('created_at','desc')->get();
         return view('project', ['project' => $project, 'comments' => $comments, 'user' => $user]);
+    }
+
+    /**
+     *プロジェクト編集画面
+     *
+     */
+    public function showEditProject($id) {
+        $user = Auth::user();
+        $project = Project::find($id);
+        return view('editproject', ['project' => $project, 'user' => $user]);
+    }
+
+    /**
+     *プロジェクト更新
+     *
+     */
+    public function updateProject(Request $request) {
+        $inputs = $request->all();
+
+        \DB::beginTransaction();
+        try {
+            $project = Project::find($inputs['id']);
+            $project->fill([
+                'title' => $request['title'],
+                'overview' => $request['overview'],
+                'skill' => $request['skill'],
+                'start_date' => $request['start_date'],
+                'end_date' => $request['end_date'],
+                'recruitment' => $request['recruitment'],
+                'status' => $request['status'],
+                'link' => $request['link'],
+                'price' => $request['price'],
+            ]);
+            $project->save();
+            \DB::commit();
+        }catch(\Throwable $e) {
+            \DB::rollback();
+            abort(500);
+        }
+
+        return redirect(route('main'));
     }
 
     /**

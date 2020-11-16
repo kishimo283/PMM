@@ -35,9 +35,13 @@ Route::delete('/comment/{id}', 'MainController@CommentDestroy')->name('CommentDe
 Route::get('/newproject', 'MainController@newproject')->name('newproject');
 //新規プロジェクト保存
 Route::post('/post', 'MainController@storeNewproject')->name('storeNewproject');
+//プロジェクト編集
+Route::get('/project/edit/{id}', 'MainController@showEditProject')->name('showEditProject');
+//プロジェクト更新
+Route::post('/project/update', 'MainController@updateProject')->name('updateProject');
 //マイページ表示
 Route::get('/mypage/{id}', 'MainController@showMypage')->name('showMypage');
 //マイページ編集
 Route::get('/mypage/edit/{id}', 'MainController@showEditMypage')->name('showEditMypage');
-//マイページ保存
+//マイページ更新
 Route::post('/mypage/update', 'MainController@updateMypage')->name('updateMypage');
