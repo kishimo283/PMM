@@ -49,10 +49,6 @@
         <label for="price">価格</label>
         <input type="number" name="price" min="1" max="5000000" id="price" value="{{ $project->price }}">
 
-        <input type="submit" value="更新する">
+        <input type="submit" value="更新する" class="btn btn-primary">
     </form>
-@endsection
-
-@section('footer')
-    copyright 2020 kishimoto
 @endsection

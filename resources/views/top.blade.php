@@ -14,7 +14,3 @@
     <p>※企業の方はこちらから（<a href="/company/login">ログイン</a>|<a href="/company/register">登録</a>）</p>
     @endif
 @endsection
-
-@section('footer')
-    copyright 2020 kishimoto
-@endsection

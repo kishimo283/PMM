@@ -22,7 +22,3 @@
         <input type="submit" class="btn btn-primary" value="更新">
     </form>
 @endsection
-
-@section('footer')
-    copyright 2020 kishimoto
-@endsection

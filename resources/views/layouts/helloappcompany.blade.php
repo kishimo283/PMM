@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
-    <div class="header">
-        <h1><a href="/">@yield('title')</a></h1>
+<div class="header">
+        <h1><a href="/company/top">@yield('title')</a></h1>
         <h2 class="menutitle">@yield('menutitle')</h2>
     </div>
     <div class="main">

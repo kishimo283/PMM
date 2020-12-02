@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\Project;
 use App\Models\Comment;
+use App\User;
 
 class MainController extends Controller
 {
@@ -20,10 +22,21 @@ class MainController extends Controller
     }
 
     /**
+     *企業トップページ表示
+     *@param
+     */
+    public function companyTop(Request $request) {
+        return view('companytop');
+    }
+
+    /**
      *メインページ表示
      *@param
      */
     public function main() {
+        if(!Auth::check()) {
+            return redirect(route('top'));
+        }
         $user = Auth::user();
         $projects = Project::all();
         return view('main', ['projects' => $projects, 'user' => $user]);
@@ -34,6 +47,9 @@ class MainController extends Controller
      *@param
      */
     public function newproject() {
+        if(!Auth::check()) {
+            return redirect(route('top'));
+        }
         $id = Auth::id();
         return view('newproject', ['id' => $id]);
     }
@@ -44,6 +60,10 @@ class MainController extends Controller
      */
     public function storeNewproject(Request $request) {
 
+        if(!Auth::check()) {
+            return redirect(route('top'));
+        }
+
         $this->validate(
             $request, [
                 'title' => 'required|string|max:30',
@@ -52,6 +72,7 @@ class MainController extends Controller
                 'start_date' => 'required',
                 'end_date' => 'required',
                 'recruitment' => 'required',
+                'specification' => 'required',
             ],[
                 'title.required' => 'タイトルは必須です',
                 'title.string' => 'タイトルは文字列を入力してください',
@@ -65,6 +86,7 @@ class MainController extends Controller
                 'start_date.required' => '開始日を入力してください',
                 'end_date.required' => '終了日を入力してください',
                 'recruitment.required' => '人数を入力してください',
+                'specification.required' => '仕様書を添付してください',
             ]
         );
 
@@ -98,6 +120,9 @@ class MainController extends Controller
      *@param
      */
     public function showMypage($id) {
+        if(!Auth::check()) {
+            return redirect(route('top'));
+        }
         $user = Auth::user();
         $param = ['user' => $user];
         $projects = $user->projects()->orderBy('created_at','desc')->get();
@@ -109,10 +134,14 @@ class MainController extends Controller
      *@param
      */
     public function project($id) {
+        if(!Auth::check()) {
+            return redirect(route('top'));
+        }
         $user = Auth::user();
         $project = Project::find($id);
+        $originater = User::find($project->user_id);
         $comments = $project->comments()->orderBy('created_at','desc')->get();
-        return view('project', ['project' => $project, 'comments' => $comments, 'user' => $user]);
+        return view('project', ['project' => $project, 'comments' => $comments, 'user' => $user, 'originater' => $originater]);
     }
 
     /**
@@ -120,6 +149,9 @@ class MainController extends Controller
      *
      */
     public function showEditProject($id) {
+        if(!Auth::check()) {
+            return redirect(route('top'));
+        }
         $user = Auth::user();
         $project = Project::find($id);
         return view('editproject', ['project' => $project, 'user' => $user]);
@@ -130,6 +162,9 @@ class MainController extends Controller
      *
      */
     public function updateProject(Request $request) {
+        if(!Auth::check()) {
+            return redirect(route('top'));
+        }
         $inputs = $request->all();
 
         \DB::beginTransaction();
@@ -157,10 +192,41 @@ class MainController extends Controller
     }
 
     /**
+     *完成プロジェクト表示
+     *@param
+     */
+    public function completeProject() {
+        if(!Auth::check()) {
+            return redirect(route('top'));
+        }
+        $user = Auth::user();
+        $projects = DB::table('projects')->where('status', '完了')->get();
+        return view('completeproject', ['projects' => $projects, 'user' => $user]);
+    }
+
+    /**
+     *完成プロジェクト詳細画面表示
+     *@param
+     */
+    public function showComplete ($id) {
+        if(!Auth::check()) {
+            return redirect(route('top'));
+        }
+        $user = Auth::user();
+        $project = Project::find($id);
+        $originater = User::find($project->user_id);
+        $comments = $project->comments()->orderBy('created_at','desc')->get();
+        return view('showcomplete', ['project' => $project, 'comments' => $comments, 'user' => $user, 'originater' => $originater]);
+    }
+
+    /**
      *コメント投稿機能
      *
      */
     public function comment(Request $request) {
+        if(!Auth::check()) {
+            return redirect(route('top'));
+        }
         $comment = new Comment;
         $comment->user_id = $request->user_id;
         $comment->project_id = $request->project_id;
@@ -181,6 +247,9 @@ class MainController extends Controller
      *
      */
     public function CommentDestroy($id) {
+        if(!Auth::check()) {
+            return redirect(route('top'));
+        }
         $comment = Comment::find($id);
         $comment->delete();
         return redirect()->back();
@@ -191,6 +260,9 @@ class MainController extends Controller
      *@param
      */
     public function showEditMypage() {
+        if(!Auth::check()) {
+            return redirect(route('top'));
+        }
         $user = Auth::user();
         $param = ['user' => $user];
         return view('editmypage', $param);
@@ -201,6 +273,10 @@ class MainController extends Controller
      *
      */
     public function updateMypage(Request $request) {
+        if(!Auth::check()) {
+            return redirect(route('top'));
+        }
+
         if(is_null($request->photo)) {
             $file_name = null;
         }else {
@@ -225,5 +301,26 @@ class MainController extends Controller
         }
 
         return redirect(route('main'));
+    }
+
+    /**
+     *企業側完成プロジェクト表示
+     *@param
+     */
+    public function companyCompleteProject() {
+        $user = Auth::user();
+        $projects = DB::table('projects')->where('status', '完了')->get();
+        return view('companycompleteproject', ['projects' => $projects, 'user' => $user]);
+    }
+
+    /**
+     *企業側完成プロジェクト詳細画面表示
+     *@param
+     */
+    public function showCompanyComplete ($id) {
+        $project = Project::find($id);
+        $originater = User::find($project->user_id);
+        $comments = $project->comments()->orderBy('created_at','desc')->get();
+        return view('showcompanycomplete', ['project' => $project, 'comments' => $comments, 'originater' => $originater]);
     }
 }

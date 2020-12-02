@@ -14,7 +14,8 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    {{ __('ログインしています!') }}
+                    <p><a href="/company/complete">プロジェクト一覧へ</a></p>
                 </div>
             </div>
         </div>

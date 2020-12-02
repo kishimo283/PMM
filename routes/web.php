@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 //トップページ表示
-Route::get('/', 'MainController@top');
+Route::get('/', 'MainController@top')->name('top');
+//企業トップページ
+Route::get('/company/top','MainController@companyTop');
 //ログイン機能
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
@@ -39,6 +41,14 @@ Route::post('/post', 'MainController@storeNewproject')->name('storeNewproject');
 Route::get('/project/edit/{id}', 'MainController@showEditProject')->name('showEditProject');
 //プロジェクト更新
 Route::post('/project/update', 'MainController@updateProject')->name('updateProject');
+//完成プロジェクト表示
+Route::get('/complete', 'MainController@completeProject')->name('completeProject');
+//完成プロジェクト詳細
+Route::get('/complete/{id}', 'MainController@showComplete')->name('showComplete');
+//企業側完成プロジェクト表示
+Route::get('/company/complete', 'MainController@companyCompleteProject')->name('companyCompleteProject');
+//企業側完成プロジェクト詳細
+Route::get('/company/complete/{id}', 'MainController@showCompanyComplete')->name('showCompanyComplete');
 //マイページ表示
 Route::get('/mypage/{id}', 'MainController@showMypage')->name('showMypage');
 //マイページ編集

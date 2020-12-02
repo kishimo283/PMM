@@ -39,10 +39,6 @@
         <label for="specification">仕様書（PDF）</label>
         <input type="file" name="specification" id="specification">
 
-        <input type="submit" value="送信する">
+        <input type="submit" value="送信する" class="btn btn-primary">
     </form>
-@endsection
-
-@section('footer')
-    copyright 2020 kishimoto
 @endsection

@@ -1,0 +1,108 @@
+.header {
+    background-color: black;
+    height: 130px;
+}
+
+.header h1 {
+    margin-left: 100px;
+}
+
+.header a {
+    color: white;
+}
+
+.menutitle {
+    text-align: center;
+    color: white;
+}
+
+.main {
+    background-image: url(/images/topbackground.jpg);
+    min-height: 100vh;
+    background-size: cover;
+}
+
+.buffer {
+    padding-top: 100px;
+}
+
+.content {
+    background-color: black;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.content-info {
+    background-color: rgb(91, 177, 42);
+    padding: 10px;
+    margin: 30px;
+    clear: both;
+    border-radius: 10px;
+}
+
+.content-info:hover {
+    opacity: 0.7;
+}
+
+.footer {
+    background-color: black;
+    height: 40px;
+}
+
+.footer p {
+    text-align: center;
+}
+
+.project-info {
+    background-color: rgb(91, 177, 42);
+    padding: 10px;
+    margin: 30px;
+    clear: both;
+    border-radius: 10px;
+}
+
+.buffer-project {
+    padding-top: 5px;
+}
+
+form {
+    padding: 10px;
+}
+
+label, input, textarea{
+    display: block;
+}
+
+input[type=submit] {
+    margin-top: 10px;
+}
+
+h3 {
+    color: white;
+}
+
+p {
+    color: white;
+}
+
+label {
+    color: white;
+    margin-top: 20px;
+}
+
+#specification {
+    color: white;
+}
+
+#photo {
+    color: white;
+}
+
+#project-button {
+    margin: 0 0 30px 30px;
+
+}
+
+.project-comments {
+    margin-left: 30px;
+}
