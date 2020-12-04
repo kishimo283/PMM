@@ -10,7 +10,7 @@
         <h3>プロジェクト名</h3>
         <p>{{ $project->title }}</p>
         <h3>発案者</h3>
-        <p><!--<a href="/mypage/{{ $originater->id }}">-->{{ $originater->name }}</a></p>
+        <p><a href="/mypage/{{ $originater->id }}">{{ $originater->name }}</a></p>
         <h3>リンク</h3>
         <p><a href="{{ $project->link }}">{{ $project->link }}</a></p>
         <h3>概要</h3>

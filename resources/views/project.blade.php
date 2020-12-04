@@ -26,7 +26,7 @@
         <h3>仕様書</h3>
         <p><a href="/storage/{{ $project->specification }}" target="_blank">{{ $project->specification }}</a></p>
     </div>
-    <button type="button" class="btn btn-primary" id="project-button">プロジェクトに参加する</button>
+    <button type="button" class="btn btn-primary" id="project-button" onclick="location.href='/mail'; return confirm('プロジェクトの参加申請をしますか？')">プロジェクトに参加する</button>
     <div class="project-comments">
         <h3>コメント欄</h3>
         <form action="/comment" method="POST">
@@ -34,7 +34,7 @@
             <input id="user_id" name="user_id" type="hidden" value="{{ $user->id }}">
             <input id="project_id" name="project_id" type="hidden" value="{{ $project->id }}">
             <textarea name="body" id="body" cols="50" rows="3"></textarea>
-            <input type="submit" value="コメントする">
+            <input type="submit" value="コメントする" >
         </form>
         @foreach($comments as $comment)
         <form action="{{ route('CommentDestroy', $comment->id) }}" method="post">
@@ -42,7 +42,7 @@
         @method('DELETE')
             <div class="comments">
                     <p>{{ $comment->body }}</p>
-                    <input type="submit" value="削除">
+                    <input type="submit" value="削除" onclick="return confirm('コメントを削除しますか？')">
             </div>
         </form>
         @endforeach

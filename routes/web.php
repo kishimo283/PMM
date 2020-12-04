@@ -55,3 +55,5 @@ Route::get('/mypage/{id}', 'MainController@showMypage')->name('showMypage');
 Route::get('/mypage/edit/{id}', 'MainController@showEditMypage')->name('showEditMypage');
 //マイページ更新
 Route::post('/mypage/update', 'MainController@updateMypage')->name('updateMypage');
+//メール送信機能
+Route::get('/mail', 'MailSendController@send');

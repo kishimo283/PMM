@@ -120,10 +120,10 @@ class MainController extends Controller
      *@param
      */
     public function showMypage($id) {
-        if(!Auth::check()) {
+        /*if(!Auth::check()) {
             return redirect(route('top'));
-        }
-        $user = Auth::user();
+        }*/
+        $user = User::find($id);
         $param = ['user' => $user];
         $projects = $user->projects()->orderBy('created_at','desc')->get();
         return view('mypage', $param, ['projects' => $projects]);

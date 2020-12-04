@@ -39,6 +39,6 @@
         <label for="specification">仕様書（PDF）</label>
         <input type="file" name="specification" id="specification">
 
-        <input type="submit" value="送信する" class="btn btn-primary">
+        <input type="submit" value="送信する" class="btn btn-primary" onclick="return confirm('新規プロジェクトを投稿しますか？')">
     </form>
 @endsection

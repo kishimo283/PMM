@@ -5,12 +5,13 @@
 @section('menutitle', '完成プロジェクト一覧')
 
 @section('content')
+    <p><a href="/company/top">トップページへ戻る</a></p>
     <div class="buffer-project"></div>
     @foreach($projects as $project)
         <div class="container">
             <div class="row">
                 <div class="col-lg-2"></div>
-                <div class="col-lg-8" style="background-color: orange;">
+                <div class="col-lg-8 project-info">
                     <h3>プロジェクト名</h3>
                     <p>{{ $project->title }}</p>
                     <h3>プロジェクト開始予定日</h3>

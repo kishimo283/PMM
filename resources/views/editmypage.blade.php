@@ -19,6 +19,6 @@
         <label for="introduction">自己紹介</label>
         <textarea name="introduction" id="introduction" cols="30" rows="3">{{ $user->introduction }}</textarea>
 
-        <input type="submit" class="btn btn-primary" value="更新">
+        <input type="submit" class="btn btn-primary" value="更新" onclick="return confirm('更新しますか？')">
     </form>
 @endsection
