@@ -9,6 +9,7 @@
 
 .header a {
     color: white;
+    text-decoration: none;
 }
 
 .menutitle {
@@ -42,6 +43,10 @@
 
 .content-info:hover {
     opacity: 0.7;
+}
+
+.content-info a {
+    text-decoration: none;
 }
 
 .footer {

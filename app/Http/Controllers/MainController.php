@@ -38,7 +38,7 @@ class MainController extends Controller
             return redirect(route('top'));
         }
         $user = Auth::user();
-        $projects = Project::all();
+        $projects = Project::paginate(4);
         return view('main', ['projects' => $projects, 'user' => $user]);
     }
 

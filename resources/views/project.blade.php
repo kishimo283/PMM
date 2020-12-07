@@ -41,8 +41,8 @@
         @csrf
         @method('DELETE')
             <div class="comments">
-                    <p>{{ $comment->body }}</p>
-                    <input type="submit" value="削除" onclick="return confirm('コメントを削除しますか？')">
+                <p>{{ $comment->body }}</p>
+                <input type="submit" value="削除" onclick="return confirm('コメントを削除しますか？')">
             </div>
         </form>
         @endforeach

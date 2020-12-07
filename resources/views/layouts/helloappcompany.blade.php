@@ -25,6 +25,7 @@
                 <div class="col-md-2"></div>
             </div>
         </div>
+        <div class="buffer"></div>
     </div>
     <div class="footer">
         <p>copyright 2020 kishimoto</p>

@@ -12,11 +12,14 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-2"></div>
-            <div class="col-lg-8 content-info">
+            <div class="col-lg-8 content-info"><a href="/project/{{ $project->id }}">
+                <p>{{ $project->status }}</p>
                 <h3>{{ $project->title }}</h3>
-                <p><a href="/project/{{ $project->id }}">プロジェクト詳細へ</a></p>
-            </div>
+            </div></a>
         </div>
     </div>
     @endforeach
+    <div class="d-flex justify-content-center">
+        {{ $projects->links() }}
+    </div>
 @endsection

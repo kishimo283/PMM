@@ -22,7 +22,7 @@
         <input type="text" name="title" id="title" value="{{ $project->title }}">
 
         <label for="overview">サービス概要</label>
-        <textarea name="overview" rows="4" cols="40" id="overview">{{ $project->overview }}</textarea>
+        <textarea name="overview" rows="6" cols="40" id="overview">{{ $project->overview }}</textarea>
 
         <label for="skill">必要スキル</label>
         <input type="text" name="skill" id="skill" value="{{ $project->skill }}">
